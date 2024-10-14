@@ -1,0 +1,24 @@
+{
+  "hosts": [
+    "unix:///var/run/docker.sock",
+    "tcp://0.0.0.0:2376"
+  ],
+  "exec-opts": [
+    "native.cgroupdriver=cgroupfs"
+  ],
+  "insecure-registries": [
+    "192.168.88.99:5000",
+    "192.168.88.99:9001",
+    "ub99:9001",
+    "ub99:5000"
+  ],
+  "max-concurrent-uploads": 12,
+  "max-concurrent-downloads": 8,
+  "max-download-attempts": 12,
+  "experimental": true,
+  "containerd": "/run/containerd/containerd.sock",
+  "containerd-namespace": "docker",
+  "pidfile": "/var/run/docker.pid",
+  "userland-proxy": false,
+  "userland-proxy-path": "/usr/libexec/docker-proxy"
+}
