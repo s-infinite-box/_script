@@ -29,8 +29,10 @@ if [[ $cri == 'containerd' ]]; then
   fi
   executing_command "containerd config default | tee /etc/containerd/config.toml"
   sed -i "s@systemd_cgroup\ \=\ false@systemd_cgroup\ \=\ true@g" /etc/containerd/config.toml
-  sed -i "s@SystemdCgroup \ \=\ false@SystemdCgroup \ \=\ true@g" /etc/containerd/config.toml
-  sed -i "s@registry.k8s.io@registry.aliyuncs.com/google_containers@g" /etc/containerd/config.toml
+  sed -i "s@SystemdCgroup\ \=\ false@SystemdCgroup\ \=\ true@g" /etc/containerd/config.toml
+  if [ "$mirror" = "k8s" ]; then
+    sed -i "s@registry.k8s.io@registry.aliyuncs.com/google_containers@g" /etc/containerd/config.toml
+  fi
   sed -i "s@runtime_type.*@runtime_type\ \=\ \"io.containerd.runtime.v1.linux\"@g" /etc/containerd/config.toml
   ## 配置国内镜像源
 #  sed -i "s@config_path\ \=\ \"\"@config_path\ \=\ \"/etc/containerd/certs.d\"@g" /etc/containerd/config.toml

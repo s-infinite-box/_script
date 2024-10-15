@@ -1,4 +1,4 @@
-kubeadm reset
+
 systemctl stop kube*
 systemctl disable kube*
 systemctl stop etcd
@@ -7,8 +7,9 @@ rm -rf /etc/systemd/system/kube*
 rm -rf /etc/systemd/system/etcd
 systemctl daemon-reload
 
+kubeadm reset --force
+apt purge kubeadm kubelet -y
 rm -rf /var/lib/etcd
-
 rm -rf /etc/kubernetes/
 rm -rf /var/lib/kubelet
 rm -rf /usr/libexec/kubernetes

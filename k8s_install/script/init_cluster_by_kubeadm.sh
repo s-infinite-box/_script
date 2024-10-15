@@ -51,8 +51,18 @@ if ! [ -e /sys/fs/cgroup/systemd ]; then
     sudo mount -t cgroup -o none,name=systemd cgroup /sys/fs/cgroup/systemd
 fi
 
+case $mirror in
+  k8s)
+  # 使用k8s的apt源安装kubeadm 则镜像也是k8s源 国内源版本没有那么新
+  img_repo=""
+  ;;
+  *)
+  img_repo="--image-repository registry.cn-hangzhou.aliyuncs.com/google_containers"
+  ;;
+esac
+
 kubeadm_init_str="kubeadm init \
---image-repository registry.cn-hangzhou.aliyuncs.com/google_containers \
+$img_repo \
 --service-cidr=$SERVICE_CIDR \
 --pod-network-cidr=10.244.0.0/16 \
 --apiserver-advertise-address=$master_ip \

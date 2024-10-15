@@ -18,7 +18,7 @@ executing_command() {
 # kube_version
 if [ -z "${kube_version}" ]; then
 #  kube_version='1.30.2'
-  kube_version='1.27.6'
+  kube_version='last'
   export kube_version
 fi
 
@@ -54,7 +54,7 @@ then
 fi
 
 # 主机IP
-export host_ip=$(ip a | grep -P -o '192\.168\.[0-9.]{4,8}(?=\/)' | awk 'END{printf $1}')
+export host_ip=$master_ip
 # 节点名称
 export HOSTNAME=$(hostname)
 # kubernetes 运行配置文件存放

@@ -64,11 +64,6 @@ ipt_REJECT
 ipip
 EOF
 
-cat >>/etc/modules-load.d/k8s.conf <<EOF
-overlay
-br_netfilter
-EOF
-
 # 设置所需的 sysctl 参数，参数在重新启动后保持不变
 cat >/etc/sysctl.d/k8s.conf <<EOF
 net.ipv4.ip_forward = 1
@@ -96,6 +91,11 @@ net.ipv4.tcp_timestamps = 0
 net.core.somaxconn = 16384
 EOF
 
+cat >>/etc/modules-load.d/k8s.conf <<EOF
+overlay
+br_netfilter
+EOF
+
 cat > /etc/sysctl.d/90-kubelet.conf << EOF
 vm.overcommit_memory=1
 kernel.panic=10
@@ -103,6 +103,7 @@ kernel.panic_on_oops=1
 EOF
 
 sysctl -p /etc/sysctl.d/90-kubelet.conf
+sysctl -p /etc/sysctl.d/k8s.conf
 sudo modprobe overlay
 sudo modprobe br_netfilter
 sysctl --system
